@@ -1,0 +1,44 @@
+// FLEX CENTER
+@mixin flexCenter($direction: column) {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+//Transitions
+@mixin transition-ease-in-out {
+    transition: all 0.3s ease-in-out;
+}
+@mixin transition-ease-in {
+    transition: all 0.3s ease-in;
+}
+@mixin transition-linear {
+    transition: all 0.3s linear;
+}
+
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+	$src: null;
+
+	$extmods: (
+		eot: "?",
+		svg: "#" + str-replace($name, " ", "_")
+	);
+
+	$formats: (
+		otf: "opentype",
+		ttf: "truetype"
+	);
+
+	@each $ext in $exts {
+		$extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+		$format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+		$src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+	}
+
+	@font-face {
+		font-family: quote($name);
+		font-style: $style;
+		font-weight: $weight;
+		src: $src;
+	}
+}
